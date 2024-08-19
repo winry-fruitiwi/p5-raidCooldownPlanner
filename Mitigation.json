@@ -1,0 +1,10 @@
+{
+  "Gunbreaker": {
+    "Reprisal": {
+      "type": "damage reduction",
+      "cooldown": 60,
+      "duration": 10,
+      "effect": "Reduces damage dealt by nearby enemies by 10%."
+    }
+  }
+}

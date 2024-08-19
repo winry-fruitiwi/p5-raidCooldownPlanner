@@ -1,0 +1,11 @@
+{
+  "name": "Black Cat",
+  "timeline": [
+    {
+      "name": "Bloody Scratch",
+      "time": "0:30",
+      "physical": true,
+      "magical": false
+    }
+  ]
+}

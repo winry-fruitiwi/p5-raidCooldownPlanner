@@ -10,6 +10,8 @@ let variableWidthFont
 let instructions
 let debugCorner /* output debug text in the bottom left corner of the canvas */
 
+let bossJSON
+let mitJSON
 
 function preload() {
     font = loadFont('data/consola.ttf')
@@ -30,6 +32,19 @@ function setup() {
         numpad 1 → freeze sketch</pre>`)
 
     debugCorner = new CanvasDebugCorner(5)
+
+    bossJSON = loadJSON("bosses/Black_Cat.json", gotBossData)
+    mitJSON = loadJSON("Mitigation.json", gotMitData)
+}
+
+
+function gotBossData(data) {
+    console.log(data["name"])
+}
+
+
+function gotMitData(data) {
+    console.log(data["Gunbreaker"]["Reprisal"])
 }
 
 
