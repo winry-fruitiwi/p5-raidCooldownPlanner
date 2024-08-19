@@ -64,7 +64,7 @@ function draw() {
     }
 
     if (timeline && width && height) {
-        timeline.render(30, 30)
+        timeline.render()
     }
 
     if (frameCount > 3000)
