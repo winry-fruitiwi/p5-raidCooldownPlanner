@@ -13,6 +13,9 @@ let debugCorner /* output debug text in the bottom left corner of the canvas */
 let bossJSON
 let mitJSON
 
+let timeline
+let requiredHeight
+
 function preload() {
     font = loadFont('data/consola.ttf')
     fixedWidthFont = loadFont('data/consola.ttf')
@@ -33,31 +36,47 @@ function setup() {
 
     debugCorner = new CanvasDebugCorner(5)
 
-    bossJSON = loadJSON("bosses/Black_Cat.json", gotBossData)
-    mitJSON = loadJSON("Mitigation.json", gotMitData)
+    loadJSON("bosses/Black_Cat.json", gotBossData)
+    loadJSON("Mitigation.json", gotMitData)
 }
 
 
 function gotBossData(data) {
     console.log(data["name"])
+    bossJSON = data
 }
 
 
 function gotMitData(data) {
     console.log(data["Gunbreaker"]["Reprisal"])
+    mitJSON = data
 }
 
 
 function draw() {
+    if (height !== requiredHeight)
+        resizeCanvas(600, requiredHeight, true)
+
     background(234, 34, 24)
 
-    /* debugCorner needs to be last so its z-index is highest */
-    debugCorner.setText(`frameCount: ${frameCount}`, 2)
-    debugCorner.setText(`fps: ${frameRate().toFixed(0)}`, 1)
-    debugCorner.showBottom()
+    if (timeline === undefined && bossJSON && mitJSON) {
+        timeline = new Timeline(bossJSON, mitJSON)
+    }
+
+    if (timeline && width && height) {
+        timeline.render(30, 30)
+    }
 
     if (frameCount > 3000)
         noLoop()
+
+    // /* debugCorner needs to be last so its z-index is highest */
+    // debugCorner.setText(`frameCount: ${frameCount}`, 2)
+    // debugCorner.setText(`fps: ${frameRate().toFixed(0)}`, 1)
+    // debugCorner.showBottom()
+    // print(timeline)
+    // print(bossJSON)
+    // print(mitJSON)
 }
 
 
@@ -74,6 +93,12 @@ function keyPressed() {
         console.log(`debugCorner visibility set to ${debugCorner.visible}`)
     }
 }
+
+
+function textHeight() {
+    return textAscent() + textDescent()
+}
+
 
 
 /** 🧹 shows debugging info using text() 🧹 */
