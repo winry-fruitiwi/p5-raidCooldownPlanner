@@ -15,6 +15,10 @@ let mitJSON
 
 let timeline
 let requiredHeight
+let imageCache // for displaying the ability images when they exist
+
+// constants
+const IMG_SIZE = 30
 
 function preload() {
     font = loadFont('data/consola.ttf')
@@ -38,6 +42,8 @@ function setup() {
 
     loadJSON("bosses/Black_Cat.json", gotBossData)
     loadJSON("Mitigation.json", gotMitData)
+
+    imageCache = {}
 }
 
 

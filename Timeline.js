@@ -49,6 +49,7 @@ class Timeline {
         text(this.bossJSON["name"], TEXT_MARGIN + LEFT_MARGIN,
             textHeight() + TEXT_MARGIN/2)
 
+        let timelineStart = textHeight()+TEXT_MARGIN
 
         textSize(10)
         // timeline abilities
@@ -58,7 +59,7 @@ class Timeline {
             let timelinePosition = map(
                 ability["time"],
                 0, this.bossJSON["duration"],
-                textHeight()+TEXT_MARGIN, height - y
+                timelineStart, height - y
             )
 
             // add a mark (tick), then the time to the left of it
@@ -70,13 +71,45 @@ class Timeline {
                 LEFT_MARGIN + tickWidth/2, timelinePosition
             )
 
+            let tickLeftMargin = 2
+            let tickRightMargin = 5
+
             noStroke()
             textAlign(RIGHT, CENTER)
             text(
                 ability["time_string"],
-                LEFT_MARGIN - tickWidth/2 - 2,
+                LEFT_MARGIN - tickWidth/2 - tickLeftMargin,
                 timelinePosition - 0.5 // hack to make it look more centered
             )
+
+            textAlign(LEFT, CENTER)
+            imageMode(CENTER)
+
+            if (!ability["image"]) {
+                text(
+                    ability["abbreviation"],
+                    LEFT_MARGIN + tickWidth/2 + tickRightMargin,
+                    timelinePosition - 0.5
+                )
+            } else {
+                if (!imageCache[ability["name"]]) {
+                    let img = loadImage(
+                        ability["image"],
+                        () => {
+                            img.resize(IMG_SIZE, 0);
+                            imageCache[ability["name"]] = img;
+                        }
+                    )
+                } else {
+                    let img = imageCache[ability["name"]]
+
+                    image(
+                        img,
+                        IMG_SIZE/2 + LEFT_MARGIN + tickWidth/2 + tickLeftMargin,
+                        timelinePosition - 0.5
+                    )
+                }
+            }
         }
 
         pop()

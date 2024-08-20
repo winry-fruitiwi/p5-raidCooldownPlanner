@@ -5,16 +5,7 @@
     {
       "name": "Quad Crossing",
       "abbreviation": "Quad",
-      "image": "null",
-      "time_string": "0:05",
-      "time": 5,
-      "physical": true,
-      "magical": false
-    },
-    {
-      "name": "Quad Crossing",
-      "abbreviation": "Quad",
-      "image": "null",
+      "image": null,
       "time_string": "0:10",
       "time": 10,
       "physical": true,
@@ -23,25 +14,16 @@
     {
       "name": "Bloody Scratch",
       "abbreviation": "Scratch",
-      "image": "null",
+      "image": "bosses/abilityPhotos/bloodyScratch.png",
       "time_string": "0:30",
       "time": 30,
       "physical": true,
       "magical": false
     },
     {
-      "name": "Mouser Attack 1",
-      "abbreviation": "MA1",
-      "image": "null",
-      "time_string": "0:50",
-      "time": 50,
-      "physical": true,
-      "magical": false
-    },
-    {
       "name": "Mouser Attack 2",
       "abbreviation": "MA2",
-      "image": "null",
+      "image": null,
       "time_string": "0:55",
       "time": 55,
       "physical": true,
