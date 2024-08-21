@@ -17,13 +17,19 @@ let timeline
 let requiredHeight
 let imageCache // for displaying the ability images when they exist
 
+let magical
+let physical
+
 // constants
-const IMG_SIZE = 30
+const IMG_SIZE = 40
 
 function preload() {
     font = loadFont('data/consola.ttf')
     fixedWidthFont = loadFont('data/consola.ttf')
     variableWidthFont = loadFont('data/meiryo.ttf')
+
+    magical = loadImage("/icons/magical.png")
+    physical = loadImage("/icons/physical.png")
 }
 
 
@@ -44,6 +50,9 @@ function setup() {
     loadJSON("Mitigation.json", gotMitData)
 
     imageCache = {}
+
+    magical.resize(IMG_SIZE/2, 0)
+    physical.resize(IMG_SIZE/2, 0)
 }
 
 

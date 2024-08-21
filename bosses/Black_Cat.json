@@ -1,11 +1,11 @@
 {
   "name": "Black Cat",
-  "duration": 60,
+  "duration": 100,
   "timeline": [
     {
       "name": "Quad Crossing",
       "abbreviation": "Quad",
-      "image": null,
+      "image": "abilityPhotos/quadCrossing.png",
       "time_string": "0:10",
       "time": 10,
       "physical": true,
@@ -14,20 +14,20 @@
     {
       "name": "Bloody Scratch",
       "abbreviation": "Scratch",
-      "image": "bosses/abilityPhotos/bloodyScratch.png",
+      "image": "abilityPhotos/bloodyScratch.png",
       "time_string": "0:30",
       "time": 30,
       "physical": true,
-      "magical": false
+      "magical": true
     },
     {
       "name": "Mouser Attack 2",
       "abbreviation": "MA2",
-      "image": null,
+      "image": "abilityPhotos/mouserAttacks.png",
       "time_string": "0:55",
       "time": 55,
-      "physical": true,
-      "magical": false
+      "physical": false,
+      "magical": true
     }
   ]
 }

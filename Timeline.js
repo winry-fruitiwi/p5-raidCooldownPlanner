@@ -94,7 +94,7 @@ class Timeline {
             } else {
                 if (!imageCache[ability["name"]]) {
                     let img = loadImage(
-                        ability["image"],
+                        "bosses/"+ability["image"],
                         () => {
                             img.resize(IMG_SIZE, 0);
                             imageCache[ability["name"]] = img;
@@ -107,6 +107,27 @@ class Timeline {
                         img,
                         IMG_SIZE/2 + LEFT_MARGIN + tickWidth/2 + tickLeftMargin,
                         timelinePosition - 0.5
+                    )
+                }
+
+                if (ability["physical"] && ability["magical"]) {
+                    image(physical,
+                        IMG_SIZE/4 + LEFT_MARGIN + tickWidth/2 + tickLeftMargin,
+                        timelinePosition - 0.5 + IMG_SIZE/2 + 10
+                    )
+                    image(magical,
+                        IMG_SIZE*3/4 + LEFT_MARGIN + tickWidth/2 + tickLeftMargin,
+                        timelinePosition - 0.5 + IMG_SIZE/2 + 10
+                    )
+                } else if (ability["physical"]) {
+                    image(physical,
+                        IMG_SIZE/2 + LEFT_MARGIN + tickWidth/2 + tickLeftMargin,
+                        timelinePosition - 0.5 + IMG_SIZE/2 + 10
+                    )
+                } else if (ability["magical"]) {
+                    image(magical,
+                        IMG_SIZE/2 + LEFT_MARGIN + tickWidth/2 + tickLeftMargin,
+                        timelinePosition - 0.5 + IMG_SIZE/2 + 10
                     )
                 }
             }
