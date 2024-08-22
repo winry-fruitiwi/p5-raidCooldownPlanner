@@ -21,8 +21,8 @@
       "magical": true
     },
     {
-      "name": "Mouser Attack 2",
-      "abbreviation": "MA2",
+      "name": "Mouser Attack 1",
+      "abbreviation": "MA1",
       "image": "abilityPhotos/mouserAttacks.png",
       "time_string": "0:55",
       "time": 55,

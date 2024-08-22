@@ -28,6 +28,7 @@ class Timeline {
     // and update functions.
     render(x=30, y=30) {
         requiredHeight = this.bossJSON["duration"]*5 + y
+        // required because dictionaries don't support this format?
 
         // margin around the text
         const TEXT_MARGIN = 5
@@ -36,22 +37,51 @@ class Timeline {
         push()
         translate(x, y)
 
+        let timelineStart = textHeight()+TEXT_MARGIN
+
         // add the lines that make up the table
         stroke(0, 0, 80)
         strokeWeight(2)
-        line(0, textHeight()+TEXT_MARGIN, width, textHeight()+TEXT_MARGIN)
-        line(LEFT_MARGIN, 0, LEFT_MARGIN, height)
+        line(0, timelineStart, width, timelineStart)
 
-        noStroke()
-        fill(0, 0, 80)
-        textAlign(LEFT, BOTTOM)
+        // list of all the names we need to display and handle
+        let classes = {[this.bossJSON["name"]]: "boss",
+            "Mitsugan Miyamoto": "Gunbreaker",
+            "Aerry Berry": "Gunbreaker"
+        }
+
+        push()
+        for (let i=0; i<Object.keys(classes).length; i++) {
+            name = Object.keys(classes)[i]
+
+            line(LEFT_MARGIN, 0, LEFT_MARGIN, height)
+
+            noStroke()
+            fill(0, 0, 80)
+            textAlign(LEFT, BOTTOM)
+            textSize(14)
+            text(name, TEXT_MARGIN + LEFT_MARGIN,
+                textHeight() + TEXT_MARGIN / 2)
+
+            stroke(0, 0, 80)
+            strokeWeight(2)
+            line(
+                TEXT_MARGIN * 2 + LEFT_MARGIN + textWidth(name),
+                0,
+                TEXT_MARGIN * 2 + LEFT_MARGIN + textWidth(name),
+                height
+            )
+
+
+            if (classes["name"] !== "boss") {
+
+            }
+
+            translate(LEFT_MARGIN + textWidth(name), 0)
+        }
+        pop()
+
         textSize(14)
-        text(this.bossJSON["name"], TEXT_MARGIN + LEFT_MARGIN,
-            textHeight() + TEXT_MARGIN/2)
-
-        let timelineStart = textHeight()+TEXT_MARGIN
-
-        textSize(10)
         // timeline abilities
         for (let ability of this.bossTimeline) {
             // find the position where the ability would be displayed on the
@@ -75,6 +105,7 @@ class Timeline {
             let tickRightMargin = 5
 
             noStroke()
+            fill(0, 0, 80)
             textAlign(RIGHT, CENTER)
             text(
                 ability["time_string"],
@@ -108,6 +139,25 @@ class Timeline {
                         IMG_SIZE/2 + LEFT_MARGIN + tickWidth/2 + tickLeftMargin,
                         timelinePosition - 0.5
                     )
+
+                    // when hovering over the image, display the real name
+                    // of the ability
+                    if (
+                        x + LEFT_MARGIN + tickWidth/2 + tickLeftMargin < mouseX &&
+                        y - IMG_SIZE/2 + timelinePosition - 0.5 < mouseY &&
+                        mouseX < x + IMG_SIZE + LEFT_MARGIN + tickWidth/2 + tickLeftMargin &&
+                        mouseY < y + IMG_SIZE - IMG_SIZE/2 + timelinePosition - 0.5
+                    ) {
+                        textAlign(LEFT, BOTTOM)
+                        fill(0, 0, 10)
+                        // add 3 pixels of padding on each side
+                        rect(mouseX-x, mouseY-y, textWidth(ability["name"])+6, -textHeight()-6)
+
+                        fill(0, 0, 80)
+                        text(ability["name"], mouseX - x+3, mouseY - y-3)
+
+                        textAlign(LEFT, CENTER)
+                    }
                 }
 
                 if (ability["physical"] && ability["magical"]) {
