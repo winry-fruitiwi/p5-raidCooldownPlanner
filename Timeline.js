@@ -47,37 +47,76 @@ class Timeline {
         // list of all the names we need to display and handle
         let classes = {[this.bossJSON["name"]]: "boss",
             "Mitsugan Miyamoto": "Gunbreaker",
-            "Aerry Berry": "Gunbreaker"
+            "Aerry Berry": "Gunbreaker",
+            "Cody Berry": "Gunbreaker"
         }
 
         push()
         for (let i=0; i<Object.keys(classes).length; i++) {
-            name = Object.keys(classes)[i]
+            let name = Object.keys(classes)[i]
 
+            stroke(0, 0, 80)
+            strokeWeight(2)
             line(LEFT_MARGIN, 0, LEFT_MARGIN, height)
 
             noStroke()
             fill(0, 0, 80)
             textAlign(LEFT, BOTTOM)
             textSize(14)
-            text(name, TEXT_MARGIN + LEFT_MARGIN,
-                textHeight() + TEXT_MARGIN / 2)
+            if (classes[name] === "boss") {
+                text(name, TEXT_MARGIN + LEFT_MARGIN,
+                    textHeight() + TEXT_MARGIN / 2)
 
-            stroke(0, 0, 80)
-            strokeWeight(2)
-            line(
-                TEXT_MARGIN * 2 + LEFT_MARGIN + textWidth(name),
-                0,
-                TEXT_MARGIN * 2 + LEFT_MARGIN + textWidth(name),
-                height
-            )
+                stroke(0, 0, 80)
+                strokeWeight(2)
+                line(
+                    TEXT_MARGIN * 2 + LEFT_MARGIN + textWidth(name),
+                    0,
+                    TEXT_MARGIN * 2 + LEFT_MARGIN + textWidth(name),
+                    height
+                )
+            }
+            else {
+                let img = jobIMGs[classes[name]]
+                img.resize(IMG_SIZE, 0)
 
+                image(jobIMGs[classes[name]], TEXT_MARGIN + LEFT_MARGIN,
+                    textHeight() + TEXT_MARGIN / 2 - IMG_SIZE)
 
-            if (classes["name"] !== "boss") {
-
+                stroke(0, 0, 80)
+                strokeWeight(2)
+                line(
+                    TEXT_MARGIN * 2 + LEFT_MARGIN + IMG_SIZE,
+                    0,
+                    TEXT_MARGIN * 2 + LEFT_MARGIN + IMG_SIZE,
+                    height
+                )
             }
 
-            translate(LEFT_MARGIN + textWidth(name), 0)
+            if (classes[name] !== "boss") {
+                let mitigation = this.mitJSON[classes[name]]
+                for (let i = 0; i < Object.keys(mitigation).length; i++) {
+                    let timelinePosition = map(
+                        mitTime,
+                        0, this.bossJSON["duration"],
+                        timelineStart, height - y
+                    )
+
+                    stroke(0, 0, 80)
+                    strokeWeight(2)
+
+                    let tickWidth = 10
+                    line(
+                        LEFT_MARGIN + tickWidth/2, timelinePosition,
+                        LEFT_MARGIN - tickWidth/2, timelinePosition,
+                    )
+                }
+            }
+
+            if (classes[name] === "boss")
+                translate(LEFT_MARGIN + textWidth(name), 0)
+            else
+                translate(LEFT_MARGIN + IMG_SIZE, 0)
         }
         pop()
 

@@ -19,6 +19,12 @@ let imageCache // for displaying the ability images when they exist
 
 let magical
 let physical
+let jobImageFiles = ["Dancer", "Gunbreaker"]
+let jobIMGs = {}
+
+// variables for testing purposes. can be a mix of constants and let variables
+// placeholder time for when mitigation should appear
+let mitTime = 10
 
 // constants
 const IMG_SIZE = 40
@@ -30,6 +36,10 @@ function preload() {
 
     magical = loadImage("/icons/magical.png")
     physical = loadImage("/icons/physical.png")
+
+    for (let i = 0; i < jobImageFiles.length; i++) {
+        jobIMGs[jobImageFiles[i]] = loadImage(`/jobIcons/${jobImageFiles[i]}.png`)
+    }
 }
 
 
