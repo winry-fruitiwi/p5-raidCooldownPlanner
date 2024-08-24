@@ -51,6 +51,8 @@ class Timeline {
             "Cody Berry": "Gunbreaker"
         }
 
+        let totalTranslated = x
+
         push()
         for (let i=0; i<Object.keys(classes).length; i++) {
             let name = Object.keys(classes)[i]
@@ -63,6 +65,8 @@ class Timeline {
             fill(0, 0, 80)
             textAlign(LEFT, BOTTOM)
             textSize(14)
+            imageMode(CORNER)
+
             if (classes[name] === "boss") {
                 text(name, TEXT_MARGIN + LEFT_MARGIN,
                     textHeight() + TEXT_MARGIN / 2)
@@ -94,29 +98,86 @@ class Timeline {
             }
 
             if (classes[name] !== "boss") {
-                let mitigation = this.mitJSON[classes[name]]
-                for (let i = 0; i < Object.keys(mitigation).length; i++) {
+                let allMitigation = this.mitJSON[classes[name]]
+                for (let i = 0; i < Object.keys(allMitigation).length; i++) {
                     let timelinePosition = map(
                         mitTime,
                         0, this.bossJSON["duration"],
                         timelineStart, height - y
                     )
+                    let name = Object.keys(allMitigation)[i]
+                    let mit = allMitigation[name]
 
                     stroke(0, 0, 80)
                     strokeWeight(2)
+                    imageMode(CENTER)
 
                     let tickWidth = 10
+                    let tickLeftMargin = 2
+                    let tickRightMargin = 3
                     line(
                         LEFT_MARGIN + tickWidth/2, timelinePosition,
                         LEFT_MARGIN - tickWidth/2, timelinePosition,
                     )
+                    if (!mit["image"]) {
+                        text(
+                            mit["abbreviation"],
+                            LEFT_MARGIN + tickWidth/2 + tickRightMargin,
+                            timelinePosition - 0.5
+                        )
+                    } else {
+                        if (!imageCache[name]) {
+                            let img = loadImage(
+                                "mitigation/"+mit["image"],
+                                () => {
+                                    img.resize(IMG_SIZE, 0);
+                                    imageCache[name] = img;
+                                },
+                                () => {
+                                    print("oh no")
+                                }
+                            )
+                        } else {
+                            let img = imageCache[name]
+
+                            image(
+                                img,
+                                IMG_SIZE/2 + LEFT_MARGIN + tickWidth/2 + tickLeftMargin,
+                                timelinePosition - 0.5
+                            )
+
+                            // when hovering over the image, display the real name
+                            // of the ability
+                            if (
+                                totalTranslated + LEFT_MARGIN + tickWidth/2 + tickLeftMargin < mouseX &&
+                                y - IMG_SIZE/2 + timelinePosition - 0.5 < mouseY &&
+                                mouseX < totalTranslated + IMG_SIZE + LEFT_MARGIN + tickWidth/2 + tickLeftMargin &&
+                                mouseY < y + IMG_SIZE - IMG_SIZE/2 + timelinePosition - 0.5
+                            ) {
+                                noStroke()
+                                textAlign(LEFT, BOTTOM)
+                                fill(0, 0, 10)
+                                // add 3 pixels of padding on each side
+                                rect(mouseX-totalTranslated, mouseY-y, textWidth(name)+6, -textHeight()-6)
+
+                                fill(0, 0, 80)
+                                text(name, mouseX - totalTranslated+3, mouseY - y-3)
+
+                                textAlign(LEFT, CENTER)
+                            }
+                        }
+                    }
                 }
             }
 
-            if (classes[name] === "boss")
+            if (classes[name] === "boss") {
                 translate(LEFT_MARGIN + textWidth(name), 0)
-            else
+                totalTranslated += LEFT_MARGIN + textWidth(name)
+            }
+            else {
                 translate(LEFT_MARGIN + IMG_SIZE, 0)
+                totalTranslated += LEFT_MARGIN + IMG_SIZE
+            }
         }
         pop()
 

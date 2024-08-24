@@ -3,7 +3,7 @@
     "Reprisal": {
       "type": "damage reduction",
       "abbreviation": "R",
-      "image": "mitigation/reprisal.png",
+      "image": "reprisal.png",
       "cooldown": 60,
       "duration": 10,
       "effect": "Reduces damage dealt by nearby enemies by 10%."
