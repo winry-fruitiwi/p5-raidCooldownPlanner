@@ -31,7 +31,7 @@ class Timeline {
         // required because dictionaries don't support this format?
 
         // margin around the text
-        const TEXT_MARGIN = 5
+        const TEXT_MARGIN = 20
         const LEFT_MARGIN = 10
 
         push()
@@ -164,6 +164,10 @@ class Timeline {
                                 text(name, mouseX - totalTranslated+3, mouseY - y-3)
 
                                 textAlign(LEFT, CENTER)
+
+                                if (mouseIsPressed) {
+                                    mitTime = (mouseY - y - IMG_SIZE/2)/5
+                                }
                             }
                         }
                     }
@@ -171,11 +175,11 @@ class Timeline {
             }
 
             if (classes[name] === "boss") {
-                translate(LEFT_MARGIN + textWidth(name), 0)
+                translate(TEXT_MARGIN*2 + textWidth(name), 0)
                 totalTranslated += LEFT_MARGIN + textWidth(name)
             }
             else {
-                translate(LEFT_MARGIN + IMG_SIZE, 0)
+                translate(TEXT_MARGIN*2 + IMG_SIZE, 0)
                 totalTranslated += LEFT_MARGIN + IMG_SIZE
             }
         }

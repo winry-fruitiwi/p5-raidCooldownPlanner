@@ -117,6 +117,13 @@ function keyPressed() {
         debugCorner.visible = !debugCorner.visible
         console.log(`debugCorner visibility set to ${debugCorner.visible}`)
     }
+
+    if (keyCode === DOWN_ARROW) {
+        mitTime += 1
+    }
+    if (keyCode === UP_ARROW) {
+        mitTime -= 1
+    }
 }
 
 
