@@ -12,6 +12,7 @@ let debugCorner /* output debug text in the bottom left corner of the canvas */
 
 let bossJSON
 let mitJSON
+let peopleJSON
 
 let timeline
 let requiredHeight
@@ -24,10 +25,10 @@ let jobIMGs = {}
 
 // variables for testing purposes. can be a mix of constants and let variables
 // placeholder time for when mitigation should appear
-let mitTime = 10
+// let mitTime = 10
 
 // constants
-const IMG_SIZE = 40
+const IMG_SIZE = 35
 
 function preload() {
     font = loadFont('data/consola.ttf')
@@ -58,6 +59,7 @@ function setup() {
 
     loadJSON("bosses/Black_Cat.json", gotBossData)
     loadJSON("Mitigation.json", gotMitData)
+    loadJSON("people.json", gotPeopleData)
 
     imageCache = {}
 
@@ -77,6 +79,11 @@ function gotMitData(data) {
     mitJSON = data
 }
 
+function gotPeopleData(data) {
+    console.log(data["Mitsugan Miyamoto"])
+    peopleJSON = data
+}
+
 
 function draw() {
     if (height !== requiredHeight)
@@ -84,8 +91,8 @@ function draw() {
 
     background(234, 34, 24)
 
-    if (timeline === undefined && bossJSON && mitJSON) {
-        timeline = new Timeline(bossJSON, mitJSON)
+    if (timeline === undefined && bossJSON && mitJSON && peopleJSON) {
+        timeline = new Timeline(bossJSON, mitJSON, peopleJSON)
     }
 
     if (timeline && width && height) {

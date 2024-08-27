@@ -1,6 +1,7 @@
 {
-  "Gunbreaker": {
-    "Reprisal": {
+  "Mitsugan Miyamoto": [
+    {
+      "name": "Reprisal",
       "shield": false,
       "magical": false,
       "physical": false,
@@ -9,9 +10,11 @@
       "image": "reprisal.png",
       "cooldown": 60,
       "duration": 10,
+      "time": 20,
       "effect": "Reduces damage dealt by nearby enemies by 10%."
     },
-    "Heart of Light": {
+    {
+      "name": "Heart of Light",
       "shield": false,
       "magical": true,
       "physical": false,
@@ -21,7 +24,22 @@
       "image": "heartOfLight.png",
       "cooldown": 60,
       "duration": 10,
+      "time": 40,
+      "effect": "Reduces magic damage taken by self and nearby party members by 10%."
+    },
+    {
+      "name": "Shake It Off",
+      "shield": true,
+      "magical": false,
+      "physical": false,
+      "damage_reduction": false,
+      "type": "magical damage reduction",
+      "abbreviation": "R",
+      "image": "shakeItOff.png",
+      "cooldown": 60,
+      "duration": 10,
+      "time": 60,
       "effect": "Reduces magic damage taken by self and nearby party members by 10%."
     }
-  }
+  ]
 }

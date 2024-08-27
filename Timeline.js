@@ -2,24 +2,12 @@ class Timeline {
     // takes in the boss json and mitigation json to create an interactive
     // timeline. it should actually also take in a list of party members, but
     // that would unnecessarily complicate code before I'm ready to use it
-    constructor(bJSON, mJSON) {
+    constructor(bJSON, mJSON, pJSON) {
         this.bossJSON = bJSON
         this.mitJSON = mJSON
+        this.peopleJSON = pJSON
         this.bossTimeline = this.bossJSON["timeline"]
         requiredHeight = this.bossJSON["duration"]*5
-
-        this.processBossJSON(this.bossJSON)
-        this.processMitJSON(this.mitJSON)
-    }
-
-    processBossJSON(bJ) {
-        // for (let i = 0; i < bJ.length; i++) {
-        //     this.timeline.push(bJ[])
-        // }
-    }
-
-    processMitJSON(mJ) {
-
     }
 
     // renders as a vertical timeline with ticks for boss mechanics and
@@ -46,9 +34,7 @@ class Timeline {
 
         // list of all the names we need to display and handle
         let classes = {[this.bossJSON["name"]]: "boss",
-            "Mitsugan Miyamoto": "Gunbreaker",
-            "Aerry Berry": "Gunbreaker",
-            "Cody Berry": "Gunbreaker"
+            "Mitsugan Miyamoto": "Gunbreaker"
         }
 
         let totalTranslated = x
@@ -98,15 +84,16 @@ class Timeline {
             }
 
             if (classes[name] !== "boss") {
-                let allMitigation = this.mitJSON[classes[name]]
-                for (let i = 0; i < Object.keys(allMitigation).length; i++) {
+                let allMitigation = this.peopleJSON[name]
+                for (let i = 0; i < allMitigation.length; i++) {
+                    let mit = allMitigation[i]
+                    let name = mit["name"]
+
                     let timelinePosition = map(
-                        mitTime,
+                        mit["time"],
                         0, this.bossJSON["duration"],
                         timelineStart, height - y
                     )
-                    let name = Object.keys(allMitigation)[i]
-                    let mit = allMitigation[name]
 
                     stroke(0, 0, 80)
                     strokeWeight(2)
@@ -114,62 +101,37 @@ class Timeline {
 
                     let tickWidth = 10
                     let tickLeftMargin = 2
-                    let tickRightMargin = 3
+                    let tickRightMargin = 5
                     line(
                         LEFT_MARGIN + tickWidth/2, timelinePosition,
                         LEFT_MARGIN - tickWidth/2, timelinePosition,
                     )
-                    if (!mit["image"]) {
-                        text(
-                            mit["abbreviation"],
-                            LEFT_MARGIN + tickWidth/2 + tickRightMargin,
-                            timelinePosition - 0.5
+
+                    textAlign(RIGHT, CENTER)
+
+                    // manually calculate the time string
+                    let timeString = ""
+                    timeString += str(allMitigation)
+
+                    if (!imageCache[name]) {
+                        let img = loadImage(
+                            "mitigation/"+mit["image"],
+                            () => {
+                                img.resize(IMG_SIZE, 0);
+                                imageCache[name] = img;
+                            },
+                            () => {
+                                print("oh no")
+                            }
                         )
                     } else {
-                        if (!imageCache[name]) {
-                            let img = loadImage(
-                                "mitigation/"+mit["image"],
-                                () => {
-                                    img.resize(IMG_SIZE, 0);
-                                    imageCache[name] = img;
-                                },
-                                () => {
-                                    print("oh no")
-                                }
-                            )
-                        } else {
-                            let img = imageCache[name]
+                        let img = imageCache[name]
 
-                            image(
-                                img,
-                                IMG_SIZE/2 + LEFT_MARGIN + tickWidth/2 + tickLeftMargin,
-                                timelinePosition - 0.5
-                            )
-
-                            // when hovering over the image, display the real name
-                            // of the ability
-                            if (
-                                totalTranslated + LEFT_MARGIN + tickWidth/2 + tickLeftMargin < mouseX &&
-                                y - IMG_SIZE/2 + timelinePosition - 0.5 < mouseY &&
-                                mouseX < totalTranslated + IMG_SIZE + LEFT_MARGIN + tickWidth/2 + tickLeftMargin &&
-                                mouseY < y + IMG_SIZE - IMG_SIZE/2 + timelinePosition - 0.5
-                            ) {
-                                noStroke()
-                                textAlign(LEFT, BOTTOM)
-                                fill(0, 0, 10)
-                                // add 3 pixels of padding on each side
-                                rect(mouseX-totalTranslated, mouseY-y, textWidth(name)+6, -textHeight()-6)
-
-                                fill(0, 0, 80)
-                                text(name, mouseX - totalTranslated+3, mouseY - y-3)
-
-                                textAlign(LEFT, CENTER)
-
-                                if (mouseIsPressed) {
-                                    mitTime = (mouseY - y - IMG_SIZE/2)/5
-                                }
-                            }
-                        }
+                        image(
+                        img,
+                        IMG_SIZE/2 + LEFT_MARGIN + tickWidth/2 + tickRightMargin,
+                        timelinePosition - 0.5
+                        )
                     }
                 }
             }
