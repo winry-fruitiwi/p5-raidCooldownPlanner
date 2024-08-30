@@ -7,7 +7,8 @@ class Timeline {
         this.mitJSON = mJSON
         this.peopleJSON = pJSON
         this.bossTimeline = this.bossJSON["timeline"]
-        requiredHeight = this.bossJSON["duration"]*5
+        this.pixelsPerSecond = 5
+        requiredHeight = this.bossJSON["duration"]*this.pixelsPerSecond
     }
 
     // renders as a vertical timeline with ticks for boss mechanics and
@@ -84,10 +85,25 @@ class Timeline {
             }
 
             if (classes[name] !== "boss") {
-                let allMitigation = this.peopleJSON[name]
-                for (let i = 0; i < allMitigation.length; i++) {
-                    let mit = allMitigation[i]
+                let personalMit = this.peopleJSON[name]
+                let currentCooldowns = []
+
+                if (mouseX > totalTranslated &&
+                    mouseX < totalTranslated+TEXT_MARGIN*2+LEFT_MARGIN+IMG_SIZE &&
+                    mouseJustReleased
+                ) {
+                    navigator.clipboard.writeText("hello world").then(() => {
+                        console.log('Text copied to clipboard');
+                    }).catch(err => {
+                        console.error('Could not copy text: ', err);
+                    })
+                }
+
+                for (let i = 0; i < personalMit.length; i++) {
+                    let mit = personalMit[i]
                     let name = mit["name"]
+                    let mitData = this.mitJSON[name]
+
 
                     let timelinePosition = map(
                         mit["time"],
@@ -107,15 +123,25 @@ class Timeline {
                         LEFT_MARGIN - tickWidth/2, timelinePosition,
                     )
 
-                    textAlign(RIGHT, CENTER)
+                    let minutes = str(Math.floor(mit["time"]/60))
+                    let seconds = str(mit["time"]%60)
+                    if (seconds.length < 2) {
+                        seconds = "0" + seconds
+                    }
 
-                    // manually calculate the time string
-                    let timeString = ""
-                    timeString += str(allMitigation)
+                    let timeString = minutes + ":" + seconds
+
+                    noStroke()
+                    textAlign(RIGHT, CENTER)
+                    text(
+                        timeString,
+                        LEFT_MARGIN - tickWidth/2 - tickLeftMargin,
+                        timelinePosition
+                    )
 
                     if (!imageCache[name]) {
                         let img = loadImage(
-                            "mitigation/"+mit["image"],
+                            "mitigation/"+mitData["image"],
                             () => {
                                 img.resize(IMG_SIZE, 0);
                                 imageCache[name] = img;
@@ -133,16 +159,67 @@ class Timeline {
                         timelinePosition - 0.5
                         )
                     }
+
+                    // calculate when this ability will cool down next, if
+                    // it found a spot, and where it found its spot
+                    let cooldownTime = mit["time"] + mitData["cooldown"]
+                    let effectEnd = mit["time"] + mitData["duration"]
+
+                    let cooldownPos = cooldownTime * this.pixelsPerSecond
+                    let effectPos = effectEnd * this.pixelsPerSecond
+
+                    let foundSpot = false
+                    let spot = currentCooldowns.length
+                    for (let j=0; j < currentCooldowns.length; j++) {
+                        // if there's an empty spot and we haven't already
+                        // taken a spot, then take it!
+                        if (currentCooldowns[j] === null) {
+                            if (!foundSpot) {
+                                currentCooldowns[j] = cooldownTime
+                                spot = j
+                                foundSpot = true
+                            }
+                        } else {
+                            if (mit["time"] >= currentCooldowns[j]) {
+                                currentCooldowns[j] = null
+                                if (!foundSpot) {
+                                    currentCooldowns[j] = cooldownTime
+                                    spot = j
+                                    foundSpot = true
+                                }
+                            }
+                        }
+                    }
+
+                    if (!foundSpot) {
+                        currentCooldowns.push(cooldownTime)
+                    }
+
+                    strokeWeight(3)
+                    stroke(mitData["color"][0], mitData["color"][1], mitData["color"][2], 50)
+                    line(
+                        5*spot + IMG_SIZE+5 + LEFT_MARGIN + tickWidth/2 + tickRightMargin,
+                        timelinePosition,
+                        5*spot + IMG_SIZE+5 + LEFT_MARGIN + tickWidth/2 + tickRightMargin,
+                        timelinePosition + mitData["cooldown"] * this.pixelsPerSecond
+                    )
+                    stroke(mitData["color"][0], mitData["color"][1], mitData["color"][2])
+                    line(
+                        5*spot + IMG_SIZE+5 + LEFT_MARGIN + tickWidth/2 + tickRightMargin,
+                        timelinePosition,
+                        5*spot + IMG_SIZE+5 + LEFT_MARGIN + tickWidth/2 + tickRightMargin,
+                        timelinePosition + mitData["duration"] * this.pixelsPerSecond
+                    )
                 }
             }
 
             if (classes[name] === "boss") {
                 translate(TEXT_MARGIN*2 + textWidth(name), 0)
-                totalTranslated += LEFT_MARGIN + textWidth(name)
+                totalTranslated += TEXT_MARGIN*2 + textWidth(name)
             }
             else {
                 translate(TEXT_MARGIN*2 + IMG_SIZE, 0)
-                totalTranslated += LEFT_MARGIN + IMG_SIZE
+                totalTranslated += TEXT_MARGIN*2 + IMG_SIZE
             }
         }
         pop()

@@ -8,6 +8,7 @@ let font
 let fixedWidthFont
 let variableWidthFont
 let instructions
+let mouseJustReleased = false
 let debugCorner /* output debug text in the bottom left corner of the canvas */
 
 let bossJSON
@@ -69,18 +70,15 @@ function setup() {
 
 
 function gotBossData(data) {
-    console.log(data["name"])
     bossJSON = data
 }
 
 
 function gotMitData(data) {
-    console.log(data["Gunbreaker"]["Reprisal"])
     mitJSON = data
 }
 
 function gotPeopleData(data) {
-    console.log(data["Mitsugan Miyamoto"])
     peopleJSON = data
 }
 
@@ -98,6 +96,8 @@ function draw() {
     if (timeline && width && height) {
         timeline.render()
     }
+
+    mouseJustReleased = false
 
     if (frameCount > 3000)
         noLoop()
@@ -136,6 +136,11 @@ function keyPressed() {
 
 function textHeight() {
     return textAscent() + textDescent()
+}
+
+
+function mouseReleased() {
+    mouseJustReleased = true
 }
 
 
