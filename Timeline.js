@@ -87,17 +87,7 @@ class Timeline {
             if (classes[name] !== "boss") {
                 let personalMit = this.peopleJSON[name]
                 let currentCooldowns = []
-
-                if (mouseX > totalTranslated &&
-                    mouseX < totalTranslated+TEXT_MARGIN*2+LEFT_MARGIN+IMG_SIZE &&
-                    mouseJustReleased
-                ) {
-                    navigator.clipboard.writeText("hello world").then(() => {
-                        console.log('Text copied to clipboard');
-                    }).catch(err => {
-                        console.error('Could not copy text: ', err);
-                    })
-                }
+                let mitigationString = ""
 
                 for (let i = 0; i < personalMit.length; i++) {
                     let mit = personalMit[i]
@@ -130,6 +120,15 @@ class Timeline {
                     }
 
                     let timeString = minutes + ":" + seconds
+
+                    if (mouseX > totalTranslated &&
+                        mouseX < totalTranslated+TEXT_MARGIN*2+LEFT_MARGIN+IMG_SIZE &&
+                        mouseJustReleased
+                    ) {
+                        mitigationString += `${timeString}: ${mit["name"]}`
+                        if (i < personalMit.length - 1)
+                            mitigationString += "\n"
+                    }
 
                     noStroke()
                     textAlign(RIGHT, CENTER)
@@ -210,6 +209,12 @@ class Timeline {
                         5*spot + IMG_SIZE+5 + LEFT_MARGIN + tickWidth/2 + tickRightMargin,
                         timelinePosition + mitData["duration"] * this.pixelsPerSecond
                     )
+                }
+
+                if (mitigationString.length > 0) {
+                    navigator.clipboard.writeText(mitigationString).then(() => {
+                        console.log(mitigationString)
+                    })
                 }
             }
 
