@@ -9,6 +9,120 @@
       "time": 30
     },
     {
+      "name": "Heart of Light",
+      "time": 90
+    },
+    {
+      "name": "Reprisal",
+      "time": 120
+    }
+  ],
+  "Aerry Berry": [
+    {
+      "name": "Reprisal",
+      "time": 10
+    },
+    {
+      "name": "Shake It Off",
+      "time": 60
+    },
+    {
+      "name": "Reprisal",
+      "time": 120
+    }
+  ],
+  "Cup Noodles": [
+    {
+      "name": "Reprisal",
+      "time": 10
+    }
+  ],
+  "Kiwi Fruitiwi": [
+    {
+      "name": "Heart of Light",
+      "time": 30
+    },
+    {
+      "name": "Heart of Light",
+      "time": 90
+    }
+  ],
+  "Moomba Shumi": [
+    {
+      "name": "Reprisal",
+      "time": 10
+    },
+    {
+      "name": "Heart of Light",
+      "time": 30
+    },
+    {
+      "name": "Shake It Off",
+      "time": 60
+    },
+    {
+      "name": "Heart of Light",
+      "time": 90
+    },
+    {
+      "name": "Reprisal",
+      "time": 120
+    }
+  ],
+  "Winry Fruitiwi": [
+    {
+      "name": "Reprisal",
+      "time": 10
+    },
+    {
+      "name": "Heart of Light",
+      "time": 30
+    },
+    {
+      "name": "Shake It Off",
+      "time": 60
+    },
+    {
+      "name": "Heart of Light",
+      "time": 90
+    },
+    {
+      "name": "Reprisal",
+      "time": 120
+    }
+  ],
+  "Cody Berry": [
+    {
+      "name": "Reprisal",
+      "time": 10
+    },
+    {
+      "name": "Heart of Light",
+      "time": 30
+    },
+    {
+      "name": "Shake It Off",
+      "time": 60
+    },
+    {
+      "name": "Heart of Light",
+      "time": 90
+    },
+    {
+      "name": "Reprisal",
+      "time": 120
+    }
+  ],
+  "Player Hana": [
+    {
+      "name": "Reprisal",
+      "time": 10
+    },
+    {
+      "name": "Heart of Light",
+      "time": 30
+    },
+    {
       "name": "Shake It Off",
       "time": 60
     },

@@ -46,7 +46,7 @@ function preload() {
 
 
 function setup() {
-    let cnv = createCanvas(600, 300)
+    let cnv = createCanvas(1200, 300)
     cnv.parent('#canvas')
     colorMode(HSB, 360, 100, 100, 100)
     textFont(font, 14)
@@ -85,7 +85,7 @@ function gotPeopleData(data) {
 
 function draw() {
     if (height !== requiredHeight)
-        resizeCanvas(600, requiredHeight, true)
+        resizeCanvas(1200, requiredHeight, true)
 
     background(234, 34, 24)
 

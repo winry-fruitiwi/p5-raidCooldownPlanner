@@ -20,7 +20,7 @@ class Timeline {
         // required because dictionaries don't support this format?
 
         // margin around the text
-        const TEXT_MARGIN = 20
+        const TEXT_MARGIN = 40
         const LEFT_MARGIN = 10
 
         push()
@@ -33,9 +33,18 @@ class Timeline {
         strokeWeight(2)
         line(0, timelineStart, width, timelineStart)
 
-        // list of all the names we need to display and handle
+        // list of all the names we need to display and handle. order should
+        // always be MT, OT, H1, H2, R1, R2, M1, M2. sort groups of tanks,
+        // healers, ranged, and melee by alphabetical order.
         let classes = {[this.bossJSON["name"]]: "boss",
-            "Mitsugan Miyamoto": "Gunbreaker"
+            "Mitsugan Miyamoto": "Gunbreaker",
+            "Aerry Berry": "Gunbreaker",
+            "Cup Noodles": "Gunbreaker",
+            "Kiwi Fruitiwi": "Gunbreaker",
+            "Moomba Shumi": "Dancer",
+            "Winry Fruitiwi": "Gunbreaker",
+            "Cody Berry": "Gunbreaker",
+            "Player Hana": "Gunbreaker",
         }
 
         let totalTranslated = x
@@ -87,7 +96,7 @@ class Timeline {
             if (classes[name] !== "boss") {
                 let personalMit = this.peopleJSON[name]
                 let currentCooldowns = []
-                let mitigationString = ""
+                let mitigationString = name
 
                 for (let i = 0; i < personalMit.length; i++) {
                     let mit = personalMit[i]
@@ -125,9 +134,7 @@ class Timeline {
                         mouseX < totalTranslated+TEXT_MARGIN*2+LEFT_MARGIN+IMG_SIZE &&
                         mouseJustReleased
                     ) {
-                        mitigationString += `${timeString}: ${mit["name"]}`
-                        if (i < personalMit.length - 1)
-                            mitigationString += "\n"
+                        mitigationString += `\n${timeString}: ${mit["name"]}`
                     }
 
                     noStroke()
@@ -138,15 +145,16 @@ class Timeline {
                         timelinePosition
                     )
 
-                    if (!imageCache[name]) {
+                    if (imageCache[mit["name"]] === undefined) {
                         let img = loadImage(
                             "mitigation/"+mitData["image"],
                             () => {
                                 img.resize(IMG_SIZE, 0);
                                 imageCache[name] = img;
+                                print("hi");
                             },
                             () => {
-                                print("oh no")
+                                // print("oh no")
                             }
                         )
                     } else {
@@ -211,7 +219,7 @@ class Timeline {
                     )
                 }
 
-                if (mitigationString.length > 0) {
+                if (mitigationString !== name) {
                     navigator.clipboard.writeText(mitigationString).then(() => {
                         console.log(mitigationString)
                     })
