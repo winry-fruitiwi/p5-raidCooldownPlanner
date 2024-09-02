@@ -21,7 +21,12 @@ let imageCache // for displaying the ability images when they exist
 
 let magical
 let physical
-let jobImageFiles = ["Dancer", "Gunbreaker"]
+let jobImageFiles = [
+    "Dancer", "Gunbreaker", "Dragoon", "Warrior", "Scholar", "Astrologian",
+    "Red Mage", "Bard", "Monk", "Paladin", "Black Mage", "White Mage", "Ninja",
+    "Summoner", "Dark Knight", "Machinist", "Samurai", "Reaper", "Sage",
+    "Viper", "Pictomancer"
+]
 let jobIMGs = {}
 
 // variables for testing purposes. can be a mix of constants and let variables
@@ -46,7 +51,7 @@ function preload() {
 
 
 function setup() {
-    let cnv = createCanvas(1200, 300)
+    let cnv = createCanvas(900, 300)
     cnv.parent('#canvas')
     colorMode(HSB, 360, 100, 100, 100)
     textFont(font, 14)
@@ -85,7 +90,7 @@ function gotPeopleData(data) {
 
 function draw() {
     if (height !== requiredHeight)
-        resizeCanvas(1200, requiredHeight, true)
+        resizeCanvas(900, requiredHeight, true)
 
     background(234, 34, 24)
 
@@ -106,9 +111,6 @@ function draw() {
     // debugCorner.setText(`frameCount: ${frameCount}`, 2)
     // debugCorner.setText(`fps: ${frameRate().toFixed(0)}`, 1)
     // debugCorner.showBottom()
-    // print(timeline)
-    // print(bossJSON)
-    // print(mitJSON)
 }
 
 
@@ -123,13 +125,6 @@ function keyPressed() {
     if (key === '`') { /* toggle debug corner visibility */
         debugCorner.visible = !debugCorner.visible
         console.log(`debugCorner visibility set to ${debugCorner.visible}`)
-    }
-
-    if (keyCode === DOWN_ARROW) {
-        mitTime += 1
-    }
-    if (keyCode === UP_ARROW) {
-        mitTime -= 1
     }
 }
 

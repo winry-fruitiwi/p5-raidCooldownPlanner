@@ -49,89 +49,41 @@
   ],
   "Moomba Shumi": [
     {
-      "name": "Reprisal",
+      "name": "Curing Waltz",
       "time": 10
     },
     {
-      "name": "Heart of Light",
+      "name": "Shield Samba",
       "time": 30
-    },
-    {
-      "name": "Shake It Off",
-      "time": 60
-    },
-    {
-      "name": "Heart of Light",
-      "time": 90
-    },
-    {
-      "name": "Reprisal",
-      "time": 120
     }
   ],
   "Winry Fruitiwi": [
     {
-      "name": "Reprisal",
+      "name": "Star Prism",
       "time": 10
     },
     {
-      "name": "Heart of Light",
-      "time": 30
-    },
-    {
-      "name": "Shake It Off",
-      "time": 60
-    },
-    {
-      "name": "Heart of Light",
-      "time": 90
-    },
-    {
-      "name": "Reprisal",
-      "time": 120
+      "name": "Tempera Grassa",
+      "time": 15
     }
   ],
   "Cody Berry": [
     {
-      "name": "Reprisal",
+      "name": "Addle",
       "time": 10
     },
     {
-      "name": "Heart of Light",
+      "name": "Magick Barrier",
       "time": 30
-    },
-    {
-      "name": "Shake It Off",
-      "time": 60
-    },
-    {
-      "name": "Heart of Light",
-      "time": 90
-    },
-    {
-      "name": "Reprisal",
-      "time": 120
     }
   ],
   "Player Hana": [
     {
-      "name": "Reprisal",
+      "name": "Feint",
       "time": 10
     },
     {
-      "name": "Heart of Light",
-      "time": 30
-    },
-    {
-      "name": "Shake It Off",
-      "time": 60
-    },
-    {
-      "name": "Heart of Light",
-      "time": 90
-    },
-    {
-      "name": "Reprisal",
+      "name": "Feint",
       "time": 120
     }
   ]

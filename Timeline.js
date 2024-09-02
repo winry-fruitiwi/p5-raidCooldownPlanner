@@ -20,7 +20,7 @@ class Timeline {
         // required because dictionaries don't support this format?
 
         // margin around the text
-        const TEXT_MARGIN = 40
+        const TEXT_MARGIN = 25
         const LEFT_MARGIN = 10
 
         push()
@@ -38,13 +38,13 @@ class Timeline {
         // healers, ranged, and melee by alphabetical order.
         let classes = {[this.bossJSON["name"]]: "boss",
             "Mitsugan Miyamoto": "Gunbreaker",
-            "Aerry Berry": "Gunbreaker",
-            "Cup Noodles": "Gunbreaker",
-            "Kiwi Fruitiwi": "Gunbreaker",
+            "Aerry Berry": "Warrior",
+            "Cup Noodles": "Scholar",
+            "Kiwi Fruitiwi": "Astrologian",
             "Moomba Shumi": "Dancer",
-            "Winry Fruitiwi": "Gunbreaker",
-            "Cody Berry": "Gunbreaker",
-            "Player Hana": "Gunbreaker",
+            "Winry Fruitiwi": "Pictomancer",
+            "Cody Berry": "Red Mage",
+            "Player Hana": "Dragoon",
         }
 
         let totalTranslated = x
@@ -102,7 +102,7 @@ class Timeline {
                     let mit = personalMit[i]
                     let name = mit["name"]
                     let mitData = this.mitJSON[name]
-
+                    let timePadding = 4
 
                     let timelinePosition = map(
                         mit["time"],
@@ -138,32 +138,39 @@ class Timeline {
                     }
 
                     noStroke()
-                    textAlign(RIGHT, CENTER)
-                    text(
-                        timeString,
-                        LEFT_MARGIN - tickWidth/2 - tickLeftMargin,
-                        timelinePosition
-                    )
+                    textAlign(LEFT, CENTER)
+                    // text(
+                    //     timeString,
+                    //     LEFT_MARGIN + tickWidth/2 + tickRightMargin,
+                    //     timelinePosition
+                    // )
 
                     if (imageCache[mit["name"]] === undefined) {
+                        imageCache[mit["name"]] = true
                         let img = loadImage(
                             "mitigation/"+mitData["image"],
                             () => {
                                 img.resize(IMG_SIZE, 0);
-                                imageCache[name] = img;
+                                imageCache[mit["name"]] = img;
                                 print("hi");
                             },
                             () => {
-                                // print("oh no")
+                                imageCache[mit["name"]] = undefined
                             }
                         )
-                    } else {
-                        let img = imageCache[name]
+                    } else if (imageCache[mit["name"]] instanceof p5.Image) {
+                        let img = imageCache[mit["name"]]
 
                         image(
                         img,
                         IMG_SIZE/2 + LEFT_MARGIN + tickWidth/2 + tickRightMargin,
-                        timelinePosition - 0.5
+                        timelinePosition - 0.5 - textAscent()/2 - timePadding/2
+                        )
+
+                        text(
+                            timeString,
+                            LEFT_MARGIN + tickWidth/2 + tickRightMargin,
+                            timelinePosition - 0.5 + timePadding/2+IMG_SIZE/2
                         )
                     }
 
@@ -279,7 +286,7 @@ class Timeline {
                     timelinePosition - 0.5
                 )
             } else {
-                if (!imageCache[ability["name"]]) {
+                if (imageCache[ability["name"]] === undefined) {
                     let img = loadImage(
                         "bosses/"+ability["image"],
                         () => {
