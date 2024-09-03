@@ -1,6 +1,7 @@
 /**
- *  @author 
- *  @date 2023.
+ *  @author Winry Fruitiwi - PCT Main
+ *  @date 2024.8.17
+ *
  *
  */
 
@@ -63,7 +64,7 @@ function setup() {
 
     debugCorner = new CanvasDebugCorner(5)
 
-    loadJSON("bosses/Black_Cat.json", gotBossData)
+    loadJSON("bosses/Honey_B_Lovely.json", gotBossData)
     loadJSON("Mitigation.json", gotMitData)
     loadJSON("people.json", gotPeopleData)
 

@@ -268,6 +268,7 @@ class Timeline {
             let tickRightMargin = 5
 
             noStroke()
+            textSize(10)
             fill(0, 0, 80)
             textAlign(RIGHT, CENTER)
             text(
@@ -275,6 +276,7 @@ class Timeline {
                 LEFT_MARGIN - tickWidth/2 - tickLeftMargin,
                 timelinePosition - 0.5 // hack to make it look more centered
             )
+            textSize(14)
 
             textAlign(LEFT, CENTER)
             imageMode(CENTER)
