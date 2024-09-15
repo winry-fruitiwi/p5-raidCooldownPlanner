@@ -15,10 +15,20 @@ let debugCorner /* output debug text in the bottom left corner of the canvas */
 let bossJSON
 let mitJSON
 let peopleJSON
+let peopleTxtJSON
+let bossTxtJSON
 
 let timeline
 let requiredHeight
 let imageCache // for displaying the ability images when they exist
+
+let tanks = ["Paladin", "Warrior", "Dark Knight", "Gunbreaker"]
+let healers = ["Scholar", "Astrologian", "Sage", "White Mage"]
+let dps = [
+    "Dancer",  "Machinist", "Bard",
+    "Red Mage", "Black Mage", "Summoner", "Pictomancer",
+    "Monk", "Samurai", "Reaper", "Dragoon", "Ninja", "Viper"
+]
 
 let magical
 let physical
@@ -35,7 +45,7 @@ let jobIMGs = {}
 // let mitTime = 10
 
 // constants
-const IMG_SIZE = 35
+const IMG_SIZE = 30
 
 function preload() {
     font = loadFont('data/consola.ttf')
@@ -64,14 +74,101 @@ function setup() {
 
     debugCorner = new CanvasDebugCorner(5)
 
-    loadJSON("bosses/Honey_B_Lovely.json", gotBossData)
+    loadJSON("bosses/Brute_Bomber.json", gotBossData)
     loadJSON("Mitigation.json", gotMitData)
     loadJSON("people.json", gotPeopleData)
+    loadStrings("bosses/Brute_Bomber.txt", gotTimelineData)
 
     imageCache = {}
 
     magical.resize(IMG_SIZE/2, 0)
     physical.resize(IMG_SIZE/2, 0)
+}
+
+
+function gotTimelineData(data) {
+    // lines look like this: 02:50/s/Brutal Impact/s/Physical/s/40,000
+    bossTxtJSON = {
+        "name": "Brute Bomber",
+        "duration": 688,
+        "timeline": []
+    }
+    peopleTxtJSON = {}
+
+    let headerList = data[0].split('/s/')
+    let timeline = data.slice(1)
+
+    for (let i = 4; i < headerList.length; i++) {
+        peopleTxtJSON[headerList[i]] = []
+    }
+
+    for (let line of timeline) {
+        let splitLine = line.split('/s/')
+        print(splitLine)
+
+        // indices to values conversion:
+        // 0 = time that the ability occurs at
+        // 1 = full ability name - abbreviations may be substituted
+        // 2 = type of damage, either physical, magical, or both
+            // usually, both means two attacks occurred at the same time
+        // 3 = amount of damage, only present when the type is present
+
+        // desired format: {
+        //       "name": "Call Me Honey",
+        //       "abbreviation": "CMH",
+        //       "image": null,
+        //       "time_string": "9:26",
+        //       "time": 566,
+        //       "physical": false,
+        //       "magical": true
+        //     },
+
+        let timeString = splitLine[0]
+        let name = splitLine[1]
+        let type = splitLine[2]
+        // let damage = splitLine[3]
+
+        let minutesSeconds = timeString.split(":")
+        let minutes = int(minutesSeconds[0])
+        let seconds = int(minutesSeconds[1])
+
+        let time = minutes*60 + seconds
+        print(time)
+
+        if (splitLine[2]) {
+            let physical, magical
+
+            if (type === "Physical") {
+                physical = true
+                magical = false
+            }
+            else if (type === "Magical") {
+                magical = true
+                physical = false
+            }
+
+            bossTxtJSON["timeline"].push({
+                    "name": name,
+                    "abbreviation": name,
+                    "image": null, // TODO
+                    "time_string": timeString,
+                    "time": time,
+                    "physical": physical,
+                    "magical": magical
+                }
+            )
+        }
+
+        for (let i = 4; i < splitLine.length; i++) {
+            if (splitLine[i] !== "") {
+                peopleTxtJSON[headerList[i]].push({
+                    "name": splitLine[i],
+                    "time": time
+                })
+            }
+        }
+    }
+    print(peopleTxtJSON)
 }
 
 
@@ -95,8 +192,8 @@ function draw() {
 
     background(234, 34, 24)
 
-    if (timeline === undefined && bossJSON && mitJSON && peopleJSON) {
-        timeline = new Timeline(bossJSON, mitJSON, peopleJSON)
+    if (timeline === undefined && bossTxtJSON && mitJSON && peopleTxtJSON) {
+        timeline = new Timeline(bossTxtJSON, mitJSON, peopleTxtJSON)
     }
 
     if (timeline && width && height) {

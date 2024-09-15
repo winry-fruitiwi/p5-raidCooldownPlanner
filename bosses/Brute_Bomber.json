@@ -1,0 +1,15 @@
+{
+  "name": "Brute Bomber",
+  "duration": 620,
+  "timeline": [
+    {
+      "name": "Call Me Honey",
+      "abbreviation": "CMH",
+      "image": null,
+      "time_string": "0:11",
+      "time": 11,
+      "physical": false,
+      "magical": true
+    }
+  ]
+}

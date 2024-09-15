@@ -45,7 +45,7 @@
     "abbreviation": "R",
     "image": "feint.png",
     "cooldown": 90,
-    "duration": 5,
+    "duration": 15,
     "effect": "Lowers target's physical damage dealt by 10% and magic damage dealt by 5%.",
     "color": [0, 66, 78]
   },
@@ -58,7 +58,7 @@
     "abbreviation": "R",
     "image": "addle.png",
     "cooldown": 90,
-    "duration": 5,
+    "duration": 15,
     "effect": "Lowers target's magical damage dealt by 10% and physical damage dealt by 5%.",
     "color": [251, 61, 82]
   },
@@ -96,7 +96,7 @@
     "damage_reduction": false,
     "abbreviation": "R",
     "image": "curingWaltz.png",
-    "cooldown": 120,
+    "cooldown": 60,
     "duration": 0,
     "effect": "Restores own HP and the HP of all nearby party members. Additional Effect: Party member designated as your Dance Partner will also heal self and nearby party members",
     "color": [180, 40, 100]
@@ -109,7 +109,7 @@
     "damage_reduction": false,
     "abbreviation": "R",
     "image": "shieldSamba.png",
-    "cooldown": 60,
+    "cooldown": 90,
     "duration": 15,
     "effect": "Reduces damage taken by self and nearby party members by 15%.",
     "color": [14, 77, 100]

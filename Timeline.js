@@ -80,6 +80,21 @@ class Timeline {
                 let img = jobIMGs[classes[name]]
                 img.resize(IMG_SIZE, 0)
 
+                if (tanks.includes(classes[name])) {
+                    fill(230, 65, 64)
+                }
+                else if (dps.includes(classes[name])) {
+                    fill(0, 56, 45)
+                }
+                else if (healers.includes(classes[name])) {
+                    fill(106, 54, 40)
+                }
+
+                rect(TEXT_MARGIN + LEFT_MARGIN,
+                    textHeight() + TEXT_MARGIN / 2 - IMG_SIZE,
+                    IMG_SIZE, IMG_SIZE, 4
+                )
+
                 image(jobIMGs[classes[name]], TEXT_MARGIN + LEFT_MARGIN,
                     textHeight() + TEXT_MARGIN / 2 - IMG_SIZE)
 
@@ -91,6 +106,8 @@ class Timeline {
                     TEXT_MARGIN * 2 + LEFT_MARGIN + IMG_SIZE,
                     height
                 )
+
+                fill(0, 0, 80)
             }
 
             if (classes[name] !== "boss") {
