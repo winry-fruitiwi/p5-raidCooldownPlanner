@@ -33,6 +33,9 @@ class Timeline {
         strokeWeight(2)
         line(0, timelineStart, width, timelineStart)
 
+        strokeWeight(1)
+        line(LEFT_MARGIN, 0, LEFT_MARGIN, height)
+
         // list of all the names we need to display and handle. order should
         // always be MT, OT, H1, H2, R1, R2, M1, M2. sort groups of tanks,
         // healers, ranged, and melee by alphabetical order.
@@ -55,7 +58,6 @@ class Timeline {
 
             stroke(0, 0, 80)
             strokeWeight(2)
-            line(LEFT_MARGIN, 0, LEFT_MARGIN, height)
 
             noStroke()
             fill(0, 0, 80)
@@ -68,7 +70,7 @@ class Timeline {
                     textHeight() + TEXT_MARGIN / 2)
 
                 stroke(0, 0, 80)
-                strokeWeight(2)
+                strokeWeight(1)
                 line(
                     TEXT_MARGIN * 2 + LEFT_MARGIN + textWidth(name),
                     0,
@@ -96,16 +98,25 @@ class Timeline {
                 )
 
                 image(jobIMGs[classes[name]], TEXT_MARGIN + LEFT_MARGIN,
-                    textHeight() + TEXT_MARGIN / 2 - IMG_SIZE)
+                textHeight() + TEXT_MARGIN / 2 - IMG_SIZE)
 
                 stroke(0, 0, 80)
-                strokeWeight(2)
+                strokeWeight(1)
+
                 line(
                     TEXT_MARGIN * 2 + LEFT_MARGIN + IMG_SIZE,
                     0,
                     TEXT_MARGIN * 2 + LEFT_MARGIN + IMG_SIZE,
                     height
                 )
+
+                if (mouseX - totalTranslated > TEXT_MARGIN + LEFT_MARGIN &&
+                    TEXT_MARGIN + LEFT_MARGIN + IMG_SIZE > mouseX - totalTranslated &&
+                    mouseY - y > textHeight() + TEXT_MARGIN / 2 - IMG_SIZE &&
+                    textHeight() + TEXT_MARGIN / 2 > mouseY - y
+                ) {
+                    rect(mouseX - totalTranslated, mouseY - y, IMG_SIZE, IMG_SIZE)
+                }
 
                 fill(0, 0, 80)
             }

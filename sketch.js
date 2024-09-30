@@ -1,8 +1,16 @@
 /**
- *  @author Winry Fruitiwi - PCT Main
+ *  @author Winry Fruitiwi - PCT Main, working M4S
  *  @date 2024.8.17
  *
- *
+ *  Established during Patch 7.05.
+ *  I've been a Dragoon for over 4 years!
+ *  Also leveled:
+ *      Dancer - lv100, M1-4N cleared
+ *      Astrologian - lv93
+ *      Dark Knight - lv100
+ *      Sage - lv100
+ *      Reaper - lv80, no role quests
+ *      Gunbreaker - lv80, no knowledge of how to play
  */
 
 let font
@@ -161,10 +169,15 @@ function gotTimelineData(data) {
 
         for (let i = 4; i < splitLine.length; i++) {
             if (splitLine[i] !== "") {
-                peopleTxtJSON[headerList[i]].push({
-                    "name": splitLine[i],
-                    "time": time
-                })
+                let mitigation = splitLine[i].split(" + ")
+                print(mitigation)
+
+                for (let j=mitigation.length-1; j >= 0; j--) {
+                    peopleTxtJSON[headerList[i]].push({
+                        "name": mitigation[j],
+                        "time": time - 3*j
+                    })
+                }
             }
         }
     }

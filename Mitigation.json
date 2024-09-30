@@ -1,5 +1,6 @@
 {
   "Reprisal": {
+    "classes": ["Gunbreaker", "Dark Knight", "Paladin", "Warrior"],
     "shield": false,
     "magical": true,
     "physical": true,
@@ -12,6 +13,7 @@
     "color": [216, 96, 98]
   },
   "Heart of Light": {
+    "classes": ["Gunbreaker"],
     "shield": false,
     "magical": true,
     "physical": false,
@@ -23,8 +25,9 @@
     "effect": "Reduces magic damage taken by self and nearby party members by 10%.",
     "color": [45, 37, 91]
   },
-  "Shake It Off": {
-    "name": "Shake It Off",
+  "Shake it Off": {
+    "classes": ["Warrior"],
+    "name": "Shake it Off",
     "shield": true,
     "magical": false,
     "physical": false,
@@ -37,6 +40,7 @@
     "color": [188, 83, 65]
   },
   "Feint": {
+    "classes": ["Dragoon", "Monk", "Reaper", "Ninja", "Samurai", "Viper"],
     "name": "Feint",
     "shield": false,
     "magical": true,
@@ -50,6 +54,7 @@
     "color": [0, 66, 78]
   },
   "Addle": {
+    "classes": ["Red Mage", "Black Mage", "Summoner", "Pictomancer"],
     "name": "Addle",
     "shield": false,
     "magical": true,
@@ -63,6 +68,7 @@
     "color": [251, 61, 82]
   },
   "Magick Barrier": {
+    "classes": ["Red Mage"],
     "name": "Magick Barrier",
     "shield": false,
     "magical": true,
@@ -76,6 +82,7 @@
     "color": [309, 55, 70]
   },
   "Star Prism": {
+    "classes": ["Pictomancer"],
     "name": "Star Prism",
     "shield": false,
     "magical": true,
@@ -89,6 +96,7 @@
     "color": [180, 40, 100]
   },
   "Curing Waltz": {
+    "classes": ["Dancer"],
     "name": "Curing Waltz",
     "shield": false,
     "magical": false,
@@ -102,6 +110,7 @@
     "color": [180, 40, 100]
   },
   "Shield Samba": {
+    "classes": ["Dancer"],
     "name": "Shield Samba",
     "shield": false,
     "magical": true,
@@ -115,6 +124,7 @@
     "color": [14, 77, 100]
   },
   "Tempera Grassa": {
+    "classes": ["Pictomancer"],
     "name": "Tempera Grassa",
     "shield": true,
     "magical": false,
